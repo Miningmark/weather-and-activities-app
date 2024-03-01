@@ -3,6 +3,8 @@ import useLocalStorageState from "use-local-storage-state";
 import Form from "./Components/Form/Form";
 import List from "./Components/List/List";
 
+import "./App.css";
+
 function App() {
   const [weatherData, setWeatherData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,15 +49,17 @@ function App() {
 
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>
-        {weatherData.condition} {weatherData.temperature}°C
+      <main>
+        <h1>
+          {weatherData.condition} {weatherData.temperature}°C
+        </h1>
         <Form onAddActivity={handleAddActivity} />
         <List
           weatherData={weatherData}
           activities={activities}
           onDeleteActivity={handleDeleteActivity}
         />
-      </h1>
+      </main>
     </>
   );
 }
