@@ -1,24 +1,44 @@
-import logo from "./logo.svg";
-import "./App.css";
+
+import { useState, useEffect } from "react";
+
 
 function App() {
+  const [weatherData, setWeatherData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function getData() {
+      const response = await fetch(
+        "https://example-apis.vercel.app/api/weather"
+      );
+      const data = await response.json();
+      setWeatherData(data);
+      console.log(data); // Weather infos
+      setIsLoading(false);
+    }
+
+    const interval = setInterval(() => {
+      getData(); // Enable after launch !
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      console.log("Interval cleared");
+    };
+  }, []);
+  // Loading screen
+  if (isLoading) {
+    return (
+      <h3 style={{ textAlign: "center", marginTop: "50%" }}>Loading weather</h3>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1 style={{ textAlign: "center" }}>
+        {weatherData.condition} {weatherData.temperature}°C
+      </h1>
+    </>
   );
 }
 
