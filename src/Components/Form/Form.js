@@ -5,7 +5,7 @@ import { uid } from "uid";
 
 export default function Form({ onAddActivity }) {
   const [name, setName] = useState("");
-  const [isForGoodWeather, setIsForGoodWeather] = useState("");
+  const [isForGoodWeather, setIsForGoodWeather] = useState(false);
 
   function handleFormSubmit(event) {
     event.preventDefault();
