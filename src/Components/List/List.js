@@ -16,7 +16,7 @@ export default function List({}) {
     { name: "reading", isForGoodWeather: true, id: uid() },
     { name: "playing", isForGoodWeather: true, id: uid() },
   ]);
-  const [isGoodWeather, setIsGoodWeather] = useState(true);
+  const [isGoodWeather, setIsGoodWeather] = useState(false);
   return (
     <ul className="activitiesList">
       {activities
