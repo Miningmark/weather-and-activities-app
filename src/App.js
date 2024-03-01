@@ -1,10 +1,23 @@
-
 import { useState, useEffect } from "react";
-
+import useLocalStorageState from "use-local-storage-state";
+import Form from "./Components/Form/Form";
+import List from "./Components/List/List";
 
 function App() {
   const [weatherData, setWeatherData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [activities, setActivities] = useLocalStorageState("activityData", {
+    defaultValue: [],
+  });
+
+  function handleAddActivity(updateAddAtivity) {
+    setActivities([...activities, updateAddAtivity]);
+  }
+
+  function handleDeleteActivity(id) {
+    setActivities(activities.filter((activity) => activity.id !== id));
+  }
 
   useEffect(() => {
     async function getData() {
@@ -13,7 +26,6 @@ function App() {
       );
       const data = await response.json();
       setWeatherData(data);
-      console.log(data); // Weather infos
       setIsLoading(false);
     }
 
@@ -37,6 +49,12 @@ function App() {
     <>
       <h1 style={{ textAlign: "center" }}>
         {weatherData.condition} {weatherData.temperature}°C
+        <Form onAddActivity={handleAddActivity} />
+        <List
+          weatherData={weatherData}
+          activities={activities}
+          onDeleteActivity={handleDeleteActivity}
+        />
       </h1>
     </>
   );
